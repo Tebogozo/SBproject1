@@ -1,0 +1,27 @@
+{
+    "Tebogo": {
+        "age_level": "8-10",
+        "sub_level": 2,
+        "total_correct": 5,
+        "badges": []
+    },
+    "Twana": {
+        "age_level": "8-10",
+        "sub_level": 3,
+        "total_correct": 10,
+        "badges": [
+            "Beginner Mathematician"
+        ]
+    },
+    "& C:/Users/Nkululeko/Appdata/Local/Programs/Python/Python313/Python.Exe C:/Users/Nkululeko/Sbproject1/Back_End/Venv/App.Py": {
+        "age_level": "8-10",
+        "sub_level": 3,
+        "total_correct": 9,
+        "badges": []
+    },
+    "Nkululeko": {
+        "age_level": 3,
+        "sub_level": 2,
+        "total_score": 7
+    }
+}
