@@ -34,5 +34,7 @@ export default [
         { allowConstantExport: true },
       ],
     },
+    "extends": "@react-native/typescript-config/tsconfig.json",
+"exclude": ["__tests__/**/*-test.ts"]
   },
 ]

@@ -1,11 +1,12 @@
+import React from "react";
+import WelcomeScreen from "./components/WelcomeScreen.jsx"
 
+const onNext = (name) => {console.log(name)};
 
 function App() {
 
   return(
-    <>
-    <h1>Hello</h1>
-    </>
+   <WelcomeScreen onNext={onNext}/>
   )
 }
 
