@@ -1,13 +1,26 @@
-import React from "react";
-import WelcomeScreen from "./components/WelcomeScreen.jsx"
-
-const onNext = (name) => {console.log(name)};
+import React, { useState } from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
+import WelcomePage from './WelcomePage'; 
+import WelcomeScreen from "./components/ui/WelcomeScreen.jsx";
 
 function App() {
+  const [name, setName] = useState(null);
 
-  return(
-   <WelcomeScreen onNext={onNext}/>
-  )
+  const onNext = (userName) => {
+    setName(userName);
+    console.log(userName);
+  };
+
+  return (
+    <ChakraProvider>
+      {!name ? (
+        <WelcomePage onProceed={onNext} />
+      ) : (
+        <WelcomeScreen onNext={onNext} />
+      )}
+    </ChakraProvider>
+  );
 }
 
-export default App
+export default App;
+
