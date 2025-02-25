@@ -6,7 +6,7 @@ import random
 from app import app
 
 # Endpoint to create a new user
-@app.route('/users', methods=['POST'])
+@app.route('/api/users', methods=['POST'])
 def create_user():
     """Creates a new user."""
     data = request.get_json()
@@ -24,7 +24,7 @@ def create_user():
 
 
 # Endpoint to get all users
-@app.route('/users', methods=['GET'])
+@app.route('/api/users', methods=['GET'])
 def get_users():
     """Fetches all users."""
     users = User.query.all()
@@ -32,7 +32,7 @@ def get_users():
 
 
 # Endpoint to create a score for a user
-@app.route('/scores', methods=['POST'])
+@app.route('/api/scores', methods=['POST'])
 def create_score():
     """Creates a new score record for a user."""
     data = request.get_json()
@@ -54,7 +54,7 @@ def create_score():
 
 
 # Endpoint to get all scores
-@app.route('/scores', methods=['GET'])
+@app.route('/api/scores', methods=['GET'])
 def get_scores():
     """Fetches all score records."""
     scores = Score.query.all()
@@ -62,7 +62,7 @@ def get_scores():
 
 
 # Endpoint to create a question
-@app.route('/questions', methods=['POST'])
+@app.route('/api/questions', methods=['POST'])
 def create_question():
     """Creates a new question."""
     data = request.get_json()
@@ -81,7 +81,7 @@ def create_question():
 
 
 # Endpoint to get all questions
-@app.route('/questions', methods=['GET'])
+@app.route('/api/questions', methods=['GET'])
 def get_questions():
     """Fetches all generated questions."""
     questions = Question.query.all()
@@ -89,7 +89,7 @@ def get_questions():
 
 
 # Endpoint to post an answer to a question
-@app.route('/answers', methods=['POST'])
+@app.route('/api/answers', methods=['POST'])
 def create_answer():
     """Creates a new answer for a question."""
     data = request.get_json()
@@ -108,7 +108,7 @@ def create_answer():
 
 
 # Endpoint to get all answers for a specific question
-@app.route('/answers/<int:question_id>', methods=['GET'])
+@app.route('/api/answers/<int:question_id>', methods=['GET'])
 def get_answers_by_question(question_id):
     """Fetches all answers for a specific question."""
     answers = Answer.query.filter_by(question_id=question_id).all()
@@ -116,7 +116,7 @@ def get_answers_by_question(question_id):
 
 
 # Endpoint to create a level progression record for a user
-@app.route('/level-progressions', methods=['POST'])
+@app.route('/api/level-progressions', methods=['POST'])
 def create_level_progression():
     """
     Creates a new level progression record for a user.
@@ -142,7 +142,7 @@ def create_level_progression():
 
 
 # Endpoint to get all level progressions for a user
-@app.route('/level-progressions/<int:user_id>', methods=['GET'])
+@app.route('/api/level-progressions/<int:user_id>', methods=['GET'])
 def get_level_progressions(user_id):
     """
     Fetches all level progressions for a user.

@@ -20,11 +20,19 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Import the endpoints after configuring app and db
-import endpoints
+try:
+    import endpoints
+except Exception as e:
+    print(f"Error importing endpoints: {e}")
 
+# Create database tables within the app context
 with app.app_context():
-    db.create_all()
+    try:
+        db.create_all()
+        print("Database tables created successfully")
+    except Exception as e:
+        print(f"Error creating database tables: {e}")
 
 # Running the app
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True)
