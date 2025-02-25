@@ -1,6 +1,7 @@
 import random
 import time
-
+from app import db
+from models import User,Score
 
 
 def get_level_by_age(age):
@@ -145,5 +146,30 @@ def main():
             print(f"Thanks for playing, {player_name}! See you next time. 👋")
             break
 
-""" if __name__ == "__main__":
-    main()"""
+def save_score(player_name, player_age, score, badge, correct_streak, total_time):
+    """Function to save player score to the database"""
+    # Find or create the user in the database
+    user = User.query.filter_by(name=player_name).first()
+    if not user:
+        # Create the user if not found
+        user = User(name=player_name, age=player_age)
+        db.session.add(user)
+        db.session.commit()
+
+    # Save the score
+    user_score = Score(
+        score=score,
+        badge=badge,
+        correct_streak=correct_streak,
+        total_time=total_time,
+        user_id=user.id
+    )
+    db.session.add(user_score)
+    db.session.commit()
+
+    print(f"Score saved for {player_name} with {score}/5!")
+
+if __name__ == "__main__":
+    main()
+
+
