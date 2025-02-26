@@ -23,4 +23,67 @@ To get the Math App for Kids up and running on your local machine, follow these 
 ```sh
 git clone https://github.com/your-username/your-math-app.git
 cd your-math-app
-npm install
+npm  install
+
+## Prerequisities
+
+Ensure you have the following installed:
+
+* Node.js
+*React
+*Chakra UI
+*ESLint
+*Native React
+
+## frontend 
+
+Front of the math app is built with Node.js abd React using JavaScript
+
+## Backend
+
+the backend of the app is built with python and consists of several scripts that handle different aspects of the code.
+
+## Installation
+To start the backend server, use the following command:
+
+Sh
+
+python app.py
+
+## Project Structure 
+This is an overview of the project's strcuture
+
+your-math-app/
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── ...
+├── backend/
+│   ├── app.py               # Entry point for the backend server
+│   ├── requirements.txt     # List of dependencies
+│   ├── [other scripts]      # Additional scripts for handling different aspects of the code
+│   └── ...
+└── README.md
+
+## Contributing 
+
+If you have suggestions for improvements or want to report an issue, please follow these guidelines:
+
+Fork the repository
+
+Create a new branch (git checkout -b feature-branch)
+
+Commit your changes (git commit -m 'Add some feature')
+
+Push to the branch (git push origin feature-branch)
+
+Open a pull request
+
+License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+Contact
+For any questions or feedback, please reach out to us at [tebogomphuthi56406@gmail.com]
+
+
