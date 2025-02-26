@@ -1,20 +1,28 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { TextInput, Button, Text, StyleSheet } from 'react-native';
-import { VStack, Heading, Box } from '@chakra-ui/react';
+import React, { useState, useEffect } from 'react';
+import { Box, Button, Input, Text, VStack } from '@chakra-ui/react';
 
-const GameScreen = ({ name }) => {
-  const [age, setAge] = useState('');
-  const [level, setLevel] = useState(null);
+
+const GameScreen = () => {
+  const [minScore, setMinScore] = useState(3);
+  const [questions, setQuestions] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [currentAnswer, setCurrentAnswer] = useState(0);
+  const [currentScore, setCurrentScore] = useState(0);
+  const [passedIndex, setPassedIndex] = useState([]);
+  const [showScore, setShowscore] = useState(false);
+  const [subLevel, setSubLevel] = useState(1);
   const [error, setError] = useState(null);
+  const [gameOver, setGameOver] = useState(false);
 
-  const handleAgeSubmit = async () => {
-    if (age) {
+// set url params dynamically - name & age in local storage - sublevel in state
+  const getQuestions = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/level_by_age?age=${age}`);
+        const response = await fetch(`http://127.0.0.1:5000/api/questions?player_name=Nkululeko&age=8&sub_level=1`);
         const data = await response.json();
+        console.log('API',data?.questions)
         if (response.ok) {
-          setLevel(data.level);
+          setMinScore(data?.min_Score)
+          setQuestions(data?.questions)
           setError(null);
         } else {
           setError('Failed to fetch the level. Please try again.');
@@ -22,51 +30,57 @@ const GameScreen = ({ name }) => {
       } catch {
         setError('Failed to fetch the level. Please try again.');
       }
-    }
   };
 
+  useEffect(() => {
+    getQuestions()
+ },[]);
+
+ //create gameover and score view 
+ // gameover view should have a button to restart / should reset all state values to default and clear local storage
+ // button on scroll view should reset flags that are used to show both gameover and scoreview probably if/else statements
+ //on return section
+  const handleQuestion = () => {
+    const rightAnswer = questions[index].answer;
+    // if answer is correct increase score
+    if (currentAnswer == rightAnswer) {
+      setCurrentScore((prevScore) => prevScore + 1);
+      setPassedIndex((prevPassIndex) => [...prevPassIndex, index])
+    }
+    const islastQuestion = (questions[questions.length-1]).question == questions[index]
+
+    if (islastQuestion){ 
+      setShowscore(true)
+      if (currentScore <= minScore)
+        setSubLevel((prevSubLevel) => prevSubLevel + 1)
+      else
+        setGameOver(true)
+
+    }else{
+      setIndex((prevIndex) => prevIndex + 1)
+    }
+
+    
+
+  }
+
   return (
-    <VStack style={styles.container} spacing={4} align="center" justify="center">
-      <Heading>Hello, {name}!</Heading>
-      <Box>
-        <TextInput
-          style={styles.input}
-          placeholder="Enter your age"
-          value={age}
-          onChangeText={setAge}
-        />
-        <Button title="Submit Age" onPress={handleAgeSubmit} />
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh" bg="blue.200">
+        <Text fontSize="3xl" fontWeight="bold" mb={4}>{questions[index]?.question ?? "Oops! Looks like something went wrong"}</Text>
+        
+          <VStack spacing={4} align="center">
+          <Input
+            placeholder="Answer"
+            value={currentAnswer}
+            onChange={(e) => setCurrentAnswer(e.target.value)}
+            size="md"
+            width="250px"
+          />
+          {/* {nameError && <Text color="red.500">{nameError}</Text>} */}
+          <Button colorScheme="green" onClick={handleQuestion}>Submit</Button>
+        </VStack>
       </Box>
-      {level !== null && (
-        <Text>Your level is: {level}</Text>
-      )}
-      {error && (
-        <Text style={styles.error}>{error}</Text>
-      )}
-    </VStack>
-  );
+  )
 };
-
-GameScreen.propTypes = {
-  name: PropTypes.string.isRequired,
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  error: {
-    color: 'red',
-  },
-});
 
 export default GameScreen;

@@ -1,7 +1,8 @@
 import random
 import time
-from app import db
-from models import User,Score
+#from app import db
+#from models import User,Score
+
 
 
 def get_level_by_age(age):

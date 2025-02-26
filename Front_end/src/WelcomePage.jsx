@@ -1,37 +1,42 @@
 import React, { useState } from 'react';
 import { Box, Button, Input, Text, VStack } from '@chakra-ui/react';
 
+// set name and age, then view game page
 const WelcomePage = ({ onProceed }) => {
+  const [toogleView, setToogleView] = useState(false);
   const [name, setName] = useState('');
-  const [error, setError] = useState('');
+  const [nameError, setNameError] = useState('');
 
-  const handleProceed = async () => {
-    if (!name) {
-      setError('Please enter your name');
+  const [age, setAge] = useState('');
+  const [ageError, setAgeError] = useState('');
+
+  const handleName = () =>{
+    if (name.length == 0) {
+      setNameError('Please enter your name');
       return;
     }
+    setToogleView(true)
+  }
 
-    try {
-      const response = await fetch('http://127.0.0.1:5000/api/start', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name }),
-      });
+  const handleAge = async () => {
+    if (age.length == 0) {
+      
+        setAgeError('Please enter your age');
+        return;
+    }
 
-      if (response.ok) {
-        onProceed(name);
-      } else {
-        setError('Failed to start game. Try again.');
-      }
-    } catch (error) {
-      setError('Server error. Please check your connection.');
+    if (name && age > 5)
+    {
+      // storename and age into local storage
+      onProceed()
     }
   };
 
   return (
     <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh" bg="blue.200">
       <Text fontSize="3xl" fontWeight="bold" mb={4}>Welcome to the Arithmetic Drill!</Text>
-      <VStack spacing={4} align="center">
+      {!toogleView ? (
+        <VStack spacing={4} align="center">
         <Input
           placeholder="Enter your name"
           value={name}
@@ -39,12 +44,22 @@ const WelcomePage = ({ onProceed }) => {
           size="md"
           width="250px"
         />
-        {error && <Text color="red.500">{error}</Text>}
-        <Button colorScheme="green" onClick={handleProceed}>Proceed</Button>
+        {nameError && <Text color="red.500">{nameError}</Text>}
+        <Button colorScheme="green" onClick={handleName}>Proceed</Button>
       </VStack>
-      <Button position="absolute" bottom={4} left={4} colorScheme="red" onClick={() => window.close()}>
-        Exit
-      </Button>
+      ):(
+        <VStack spacing={4} align="center">
+        <Input
+          placeholder="Enter your age"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          size="md"
+          width="250px"
+        />
+        {ageError && <Text color="red.500">{ageError}</Text>}
+        <Button colorScheme="green" onClick={handleAge}>Proceed</Button>
+      </VStack>
+      )}
     </Box>
   );
 };

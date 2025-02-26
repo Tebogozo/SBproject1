@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
-import WelcomePage from './WelcomePage'; 
-import WelcomeScreen from "./components/ui/WelcomeScreen.jsx";
+//import WelcomeScreen from "./components/WelcomeScreen.jsx";
+import GamePage from './GamePage.jsx';
+import WelcomePage from './WelcomePage.jsx';
+
 
 function App() {
-  const [name, setName] = useState(null);
+  const [startGame, setStartGame] = useState(false);
 
-  const onNext = (userName) => {
-    setName(userName);
-    console.log(userName);
+  const onNext = () => {
+    setStartGame(true);
   };
 
   return (
-    <ChakraProvider>
-      {!name ? (
+      <>
+      {!startGame ? (
         <WelcomePage onProceed={onNext} />
       ) : (
-        <WelcomeScreen onNext={onNext} />
+        <GamePage onNext={onNext} />
       )}
-    </ChakraProvider>
+      </>
+      
   );
 }
 

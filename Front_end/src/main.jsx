@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
+import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom/client';
 import { ChakraProvider } from '@chakra-ui/react';
-import WelcomePage from './WelcomePage';
-import GamePage from './GamePage'; // You will need to create this component
+import { system } from "@chakra-ui/react/preset";
+import App from './App';
 
-const App = () => {
-  const [playerName, setPlayerName] = useState('');
+ReactDOM.createRoot(document.getElementById('root')).render(
+<StrictMode>
+<ChakraProvider value={system}>
+<App />
+</ChakraProvider>
+</StrictMode>
 
-  return (
-    <ChakraProvider>
-      {playerName ? (
-        <GamePage playerName={playerName} />
-      ) : (
-        <WelcomePage onProceed={setPlayerName} />
-      )}
-    </ChakraProvider>
-  );
-};
-
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+);

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { TextInput, Button, StyleSheet } from 'react-native';
 import { Box, VStack, Heading } from '@chakra-ui/react';
 
+// set name and age, then view game page
 const WelcomeScreen = ({ onNext }) => {
   const [name, setName] = useState('');
 
